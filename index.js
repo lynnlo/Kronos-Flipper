@@ -18,18 +18,18 @@ var pageIterator = 0;
 
 const serverOptions = {
 	fetchTimeout: 60000,
-	fetchPages: 30,
+	fetchPages: 50,
 	
-	profit_finder_loop_timeout: 3000,
+	profit_finder_loop_timeout: 30000,
 
 	mean_outlier_sensitivity: 2.5,
 }
 
 var flipFilter = {
 	maxPrice: 1000000,
-	minProfit: 10000,
+	minProfit: 50000,
 	minProfitPercent: 20,
-	minVolume: 5,
+	minVolume: 4,
 }
 
 //#region Data/API
@@ -206,7 +206,7 @@ let profit_finder_loop = () => {
 }
 
 fetch_loop();
-profit_finder_loop();
+setTimeout(profit_finder_loop, 2000);
 
 app.use(express.static(dir));
 app.get('/api/v1/list', (req, res) => {
