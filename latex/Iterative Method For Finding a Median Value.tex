@@ -1,0 +1,47 @@
+\documentclass{book}
+
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\begin{document}
+
+\title{An Iterative Method For Outliers From a Set of Values}
+\author{Lynn Ong}
+\maketitle
+
+\section{Abstract}
+In any given set of widely varying values, there is bound to be unwanted noise.
+This algorithm aims to clean up that noise by remove outliers and output the resulting set.
+
+\section{Algorithm}
+Below is a pseudocode representation of the algorithm.
+\begin{algorithm}
+
+\caption{Method}
+
+\begin{algorithmic}[1]
+
+\Procedure{findMedian}{values}
+\State $\textit{t} \gets \text{Total iterations}$
+\State $\textit{i} \gets 0 : \text{Current iterations}$
+\State $\Theta \gets \text{Outlier sensitivity}$
+
+\State $\textit{sum} \gets 0$
+\State $\textit{mean} \gets 0$
+
+\While{$i < t$}
+
+\State $\textit{i} \gets \textit{i} + 1$
+\EndWhile
+
+\EndProcedure
+
+\end{algorithmic}
+
+\end{algorithm}
+
+
+\end{document}
+
+

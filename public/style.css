@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap');
+
+body {
+	background-color: #1B263B;
+	color: #E0E1DD;
+	font-family: 'Nunito Sans', sans-serif;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+::-webkit-scrollbar {
+	background: #778DA955;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #778DA9;
+}
+
+button {
+	background-color: #778DA9;
+	color: #E0E1DD;
+	font-family: 'Nunito Sans', sans-serif;
+
+	text-align: center;
+
+	border: none;
+	border-radius: 5px;
+	padding: 1em;
+}
+
+.container {
+	width: 70%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	flex-wrap: wrap;
+}
+
+.card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	flex: 1 1;
+
+	font-family: 'Nunito Sans', sans-serif;
+
+	min-width: 25%;
+
+	border-radius: 20px;
+	margin: 1em;
+
+	background-color: #415A77;
+}
+
+.card-title {
+	text-align: center;
+
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.card-tier {
+	margin: 0;
+
+	font-family: 'Nunito Sans', sans-serif;
+}
+
+.card-text {
+	margin: 0 auto;
+}
+
+.card-body {
+	font-family: 'Comfortaa', cursive;
+
+	margin: 0;
+	padding: 1em;
+	
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.card-body * {
+	text-align: center;
+	width: 50%;
+}
+
+.card-button {
+	width: 80%;
+
+	margin: 0 auto;
+
+	transition: all 0.1s;
+}
+
+.card-button:hover {
+	filter: brightness(0.9);
+}
+
+.card-button:active {
+	filter: brightness(0.7);
+}
+
+.card-price-CHEAP {
+	color: hsl(150, 60%, 90%);
+}
+
+.card-price-FAIR {
+	color: hsl(150, 60%, 70%);
+}
+
+.card-price-PRICY {
+	color: hsl(150, 60%, 40%);
+}
+
+.card-price-EXPENSIVE {
+	color: hsl(150, 60%, 10%);
+}
+
+.card-profit-GOOD {
+	color: hsl(150, 60%, 75%);
+}
+
+.card-profit-GREAT {
+	color: hsl(200, 60%, 75%);
+}
+
+.card-profit-AWESOME {
+	color: hsl(350, 60%, 75%);
+}
+
+.card-tier-COMMON {
+	color: hsl(200, 15%, 80%);
+}
+
+.card-tier-UNCOMMON {
+	color: hsl(150, 60%, 75%);
+}
+
+.card-tier-RARE {
+	color: hsl(200, 60%, 75%);
+}
+
+.card-tier-EPIC {
+	color: hsl(250, 60%, 75%);
+}
+
+.card-tier-LEGENDARY {
+	color: hsl(400, 60%, 75%);
+}
+
+.card-tier-MYTHIC {
+	color: hsl(650, 60%, 75%);
+}
