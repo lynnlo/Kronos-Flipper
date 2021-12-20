@@ -55,7 +55,7 @@ let refresh = () => {
 
 			const cardMeanPriceTitle = document.createElement('h4');
 			cardMeanPriceTitle.classList.add('card-title');
-			cardMeanPriceTitle.innerText = 'Mean Price';
+			cardMeanPriceTitle.innerText = 'True Price';
 			cardBody.appendChild(cardMeanPriceTitle);
 
 			const cardMeanPrice = document.createElement('p');
@@ -77,6 +77,30 @@ let refresh = () => {
 			}
 			cardMeanPriceTitle.appendChild(cardMeanPrice);
 
+			const cardPrice2Title = document.createElement('h4');
+			cardPrice2Title.classList.add('card-title');
+			cardPrice2Title.innerText = 'Next Price';
+			cardBody.appendChild(cardPrice2Title);
+
+			const cardPrice2 = document.createElement('p');
+			cardPrice2.classList.add('card-text');
+			cardPrice2.innerText = item.items[1].price;
+			if (item.items[1].price >= 1000) {
+				cardPrice2.innerText = `${Math.round(item.items[1].price / 100) / 10}k`;
+				cardPrice2.classList.add('card-price-CHEAP');
+			}
+			if (item.items[1].price >= 1000000) {
+				cardPrice2.innerText = `${Math.round(item.items[1].price / 10000) / 100}m`;
+				cardPrice2.classList.add('card-price-EXPENSIVE');
+			}
+			else if (item.items[1].price >= 300000) {
+				cardPrice2.classList.add('card-price-PRICY');
+			}
+			else if (item.items[1].price >= 100000) {
+				cardPrice2.classList.add('card-price-FAIR');
+			}
+			cardPrice2Title.appendChild(cardPrice2);
+
 			const cardProfitTitle = document.createElement('h4');
 			cardProfitTitle.classList.add('card-title');
 			cardProfitTitle.innerText = 'Profit';
@@ -85,11 +109,18 @@ let refresh = () => {
 			const cardProfit = document.createElement('p');
 			cardProfit.classList.add('card-text');
 			cardProfit.innerText = item.profit;
-			if (item.meanPrice >= 1000000) {
-				cardProfit.innerText = `${Math.round(item.meanPrice / 10000) / 100}m`;
+			if (item.profit >= 1000) {
+				cardProfit.innerText = `${Math.round(item.profit / 100) / 10}k`;
 			}
-			else if (item.meanPrice >= 1000) {
-				cardProfit.innerText = `${Math.round(item.meanPrice / 100) / 10}k`;
+			if (item.profit >= 1000000) {
+				cardProfit.innerText = `${Math.round(item.profit / 10000) / 100}m`;
+				cardProfit.classList.add('card-profit-AWESOME');
+			}
+			else if (item.profit >= 200000) {
+				cardProfit.classList.add('card-profit-GREAT');
+			}
+			else if (item.profit >= 50000) {
+				cardProfit.classList.add('card-profit-GOOD');
 			}
 			cardProfitTitle.appendChild(cardProfit);
 
@@ -111,6 +142,25 @@ let refresh = () => {
 			}
 			cardProfitPercentage.innerText = item.profitPercentage.toString() + "%";
 			cardProfitPercentageTitle.appendChild(cardProfitPercentage);
+
+			const cardVolumeTitle = document.createElement('h4');
+			cardVolumeTitle.classList.add('card-title');
+			cardVolumeTitle.innerText = 'Volume';
+			cardBody.appendChild(cardVolumeTitle);
+			
+			const cardVolume = document.createElement('p');
+			cardVolume.classList.add('card-text');
+			if (item.items.length >= 50) {
+				cardVolume.classList.add('card-profit-AWESOME');
+			}
+			else if (item.items.length >= 20) {
+				cardVolume.classList.add('card-profit-GREAT');
+			}
+			else if (item.items.length >= 5) {
+				cardVolume.classList.add('card-profit-GOOD');
+			}
+			cardVolume.innerText = item.items.length;
+			cardVolumeTitle.appendChild(cardVolume);
 
 			const cardCopyLink = document.createElement('button');
 			cardCopyLink.classList.add('card-button');

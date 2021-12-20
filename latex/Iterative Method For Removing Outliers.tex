@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\title{An Iterative Method For Outliers From a Set of Values}
+\title{An Iterative Method For Removing Outliers From a Set of Values}
 \author{Lynn Ong}
 \maketitle
 
@@ -16,31 +16,52 @@ This algorithm aims to clean up that noise by remove outliers and output the res
 
 \section{Algorithm}
 Below is a pseudocode representation of the algorithm.
-\begin{algorithm}
 
+\algblock{Input}{EndInput}
+\algnotext{EndInput}
+\algblock{Output}{EndOutput}
+\algnotext{EndOutput}
+
+\begin{algorithm}
 \caption{Method}
 
 \begin{algorithmic}[1]
 
-\Procedure{findMedian}{values}
+\Input
+\State $\textbf{v} \space\space \text{a set of values}$
+\State $\textbf{t} \space\space \text{total iterations allowed}$
+\State $\Theta \space\space \text{sensitivity threshold}$
+\EndInput
+\Output
+\State V a set of values with outliers removed
+\EndOutput
+
+\Procedure{findMedian}{v}
+
 \State $\textit{t} \gets \text{Total iterations}$
 \State $\textit{i} \gets 0 : \text{Current iterations}$
 \State $\Theta \gets \text{Outlier sensitivity}$
 
-\State $\textit{sum} \gets 0$
-\State $\textit{mean} \gets 0$
-
 \While{$i < t$}
-
+\State $\textit{sum} \gets \sum v$
+\State $\textit{mean} \gets \frac{sum}{\text{lengthOf}(v)}$
+\For{x in v}
+\If{$x < \text{mean} * \Theta$}
+\State $\textit{v} \gets \text{remove}(x)$
+\EndIf
+\EndFor
+\State $\text{sort}(v)$
 \State $\textit{i} \gets \textit{i} + 1$
 \EndWhile
+\State $V \gets v$
+
+\Return{V}
 
 \EndProcedure
 
 \end{algorithmic}
 
 \end{algorithm}
-
 
 \end{document}
 

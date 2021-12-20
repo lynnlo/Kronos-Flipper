@@ -15,21 +15,23 @@ var profitList = [];
 
 var pagesFetched = 0;
 var pageIterator = 0;
+let pagesToFetch = 1;
 
 const serverOptions = {
 	fetchTimeout: 60000,
-	fetchPages: 50,
+	fetchSpeed: 50,
+	fetchPagesLimit: 80,
 	
 	profit_finder_loop_timeout: 30000,
 
-	mean_outlier_sensitivity: 2.5,
+	mean_outlier_sensitivity: 3,
 }
 
 var flipFilter = {
-	maxPrice: 1000000,
-	minProfit: 50000,
-	minProfitPercent: 20,
-	minVolume: 4,
+	maxPrice: 3000000,
+	minProfit: 10000,
+	minProfitPercent: 5,
+	minVolume: 1,
 }
 
 //#region Data/API
@@ -64,7 +66,7 @@ let filter_data = (data) => {
 }
 
 let get_auction_data = () => {
-	while (pagesFetched < serverOptions.fetchPages) {
+	while (pagesFetched < pagesToFetch) {
 		let options = {
 			hostname: auctionLink,
 			port: 443,
@@ -76,20 +78,24 @@ let get_auction_data = () => {
 		}
 
 		let dataStream = '';
-		https.request(options, (res) => {
-			console.log(`Thread: ${pageIterator}, Status Code: ${res.statusCode}`);
-			pageIterator++;
+		setTimeout(() => {
+			https.request(options, (res) => {
+				console.log(`Page: ${pageIterator}, Status Code: ${res.statusCode}`);
+				pageIterator++;
 
-			if (res.statusCode === 200) {
-				res.on('data', (d) => {
-					dataStream += d;
-				});
+				if (res.statusCode === 200) {
+					res.on('data', (d) => {
+						dataStream += d;
+					});
 
-				res.on('end', () => {
-					auctionData = [...auctionData, ...filter_data(JSON.parse(dataStream).auctions)];
-				});
-			}
-		}).end();
+					res.on('end', () => {
+						let json = JSON.parse(dataStream);
+						auctionData = [...auctionData, ...filter_data(json.auctions)];
+						pagesToFetch = json.totalPages < serverOptions.fetchPagesLimit ? json.totalPages : serverOptions.fetchPagesLimit;
+					});
+				}
+			}).end();
+		}, serverOptions.fetchSpeed * pagesFetched);
 
 		pagesFetched++;
 	}
@@ -108,7 +114,7 @@ let fetch_loop = () => {
 
 //#region Equations
 let true_price = (values) => {
-	const totalIterations = 15;
+	const totalIterations = 10;
 	let currentIterations = 0;
 	let effectiveSensitivity = serverOptions.mean_outlier_sensitivity;
 
@@ -121,14 +127,14 @@ let true_price = (values) => {
 
 		// Remove outliers
 		let sensitivityRate = (
-			mean * effectiveSensitivity * 0.6 +
-			(filtered ? filtered : values)[0] * 0.4
+			mean * effectiveSensitivity * 0.4 +
+			(filtered ? filtered : values)[0] * 0.6
 		)
 
 		filtered = (filtered ? filtered : values).filter(value => {return value < sensitivityRate});
 		filtered.sort((a, b) => {return a - b});
 
-		effectiveSensitivity -= 0.1 / (currentIterations + 1);
+		effectiveSensitivity -= 0.15 / (currentIterations + 1);
 
 		currentIterations++;
 	}
@@ -205,8 +211,9 @@ let profit_finder_loop = () => {
 	setTimeout(profit_finder_loop, serverOptions.profit_finder_loop_timeout);
 }
 
-fetch_loop();
-setTimeout(profit_finder_loop, 2000);
+get_auction_data(); // First time, fetches total pages
+setTimeout(fetch_loop, 2000);
+setTimeout(profit_finder_loop, 4000);
 
 app.use(express.static(dir));
 app.get('/api/v1/list', (req, res) => {
